@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author Fardan
@@ -11,11 +11,17 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalculatorForm.class.getName());
 
+    private double num1 = 0;
+    private double num2 = 0;
+    private String operator = "";
+    private boolean startNewNumber = true;
+
     /**
      * Creates new form CalculatorForm
      */
     public CalculatorForm() {
         initComponents();
+        setupButtonListeners();
     }
 
     /**
@@ -492,6 +498,296 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void plusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_plusButtonActionPerformed
+    
+    private void setupButtonListeners() {
+        // TOMBOL ANGKA (0-9)
+        zeroButton.addActionListener(e -> appendNumber("0"));
+        oneButton.addActionListener(e -> appendNumber("1"));
+        twoButton.addActionListener(e -> appendNumber("2"));
+        threeButton.addActionListener(e -> appendNumber("3"));
+        fourButton.addActionListener(e -> appendNumber("4"));
+        fiveButton.addActionListener(e -> appendNumber("5"));
+        sixButton.addActionListener(e -> appendNumber("6"));
+        sevenButton.addActionListener(e -> appendNumber("7"));
+        eightButton.addActionListener(e -> appendNumber("8"));
+        nineButton.addActionListener(e -> appendNumber("9"));
+        
+        // TOMBOL TITIK DESIMAL
+        dotButton.addActionListener(e -> {
+            String current = jTextField1.getText();
+            if (!current.contains(".")) {
+                jTextField1.setText(current + ".");
+            }
+        });
+        
+        // TOMBOL OPERATOR DASAR
+        plusButton.addActionListener(e -> setOperator("+"));
+        minusButton.addActionListener(e -> setOperator("-"));
+        multiplyButton.addActionListener(e -> setOperator("*"));
+        divideButton.addActionListener(e -> setOperator("/"));
+        
+        // TOMBOL SAMA DENGAN
+        equalButton.addActionListener(e -> calculate());
+        
+        // TOMBOL CLEAR DAN DELETE
+        clearButton.addActionListener(e -> clear());
+        delButton.addActionListener(e -> deleteLastChar());
+        
+        // TOMBOL PLUS/MINUS
+        plusMinusButton.addActionListener(e -> toggleSign());
+        
+        // TOMBOL PERSEN
+        percentButton.addActionListener(e -> calculatePercent());
+        
+        // FUNGSI SCIENTIFIC
+        sinButton.addActionListener(e -> calculateTrig("sin"));
+        cosButton.addActionListener(e -> calculateTrig("cos"));
+        tanButton.addActionListener(e -> calculateTrig("tan"));
+        sinhButton.addActionListener(e -> calculateTrig("sinh"));
+        coshButton.addActionListener(e -> calculateTrig("cosh"));
+        tanhButton.addActionListener(e -> calculateTrig("tanh"));
+        
+        // FUNGSI PANGKAT DAN AKAR
+        power2Button.addActionListener(e -> calculatePower(2));
+        power3Button.addActionListener(e -> calculatePower(3));
+        powerYButton.addActionListener(e -> setOperator("^"));
+        rootButton.addActionListener(e -> calculateRoot());
+        
+        logButton.addActionListener(e -> calculateLog());
+        expButton.addActionListener(e -> calculateExp());
+        factorialButton.addActionListener(e -> calculateFactorial());
+        // reciprocalButton.addActionListener(e -> calculateReciprocal());
+    }
+    
+    private void appendNumber(String number) {
+        String current = jTextField1.getText();
+        if (startNewNumber || current.equals("0")) {
+            jTextField1.setText(number);
+            startNewNumber = false;
+        } else {
+            jTextField1.setText(current + number);
+        }
+    }
+    
+    private void setOperator(String op) {
+        try {
+            num1 = Double.parseDouble(jTextField1.getText());
+            operator = op;
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculate() {
+        try {
+            num2 = Double.parseDouble(jTextField1.getText());
+            double result = 0;
+            
+            switch (operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 == 0) {
+                        showError("Tidak bisa dibagi nol");
+                        return;
+                    }
+                    result = num1 / num2;
+                    break;
+                case "^":
+                    result = Math.pow(num1, num2);
+                    break;
+                default:
+                    return;
+            }
+            
+            displayResult(result);
+            operator = "";
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void clear() {
+        jTextField1.setText("0");
+        num1 = 0;
+        num2 = 0;
+        operator = "";
+        startNewNumber = true;
+    }
+    
+    private void deleteLastChar() {
+        String current = jTextField1.getText();
+        if (current.length() > 1) {
+            jTextField1.setText(current.substring(0, current.length() - 1));
+        } else {
+            jTextField1.setText("0");
+        }
+    }
+    
+    private void toggleSign() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            displayResult(-value);
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculatePercent() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            displayResult(value / 100);
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculateTrig(String function) {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            double radians = Math.toRadians(value);
+            double result = 0;
+            
+            switch (function) {
+                case "sin":
+                    result = Math.sin(radians);
+                    break;
+                case "cos":
+                    result = Math.cos(radians);
+                    break;
+                case "tan":
+                    result = Math.tan(radians);
+                    break;
+                case "sinh":
+                    result = Math.sinh(radians);
+                    break;
+                case "cosh":
+                    result = Math.cosh(radians);
+                    break;
+                case "tanh":
+                    result = Math.tanh(radians);
+                    break;
+            }
+            
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculatePower(int power) {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            double result = Math.pow(value, power);
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculateRoot() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            if (value < 0) {
+                showError("Tidak bisa akar dari bilangan negatif");
+                return;
+            }
+            double result = Math.sqrt(value);
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculateLog() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            if (value <= 0) {
+                showError("Log hanya untuk bilangan positif");
+                return;
+            }
+            double result = Math.log10(value);
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculateExp() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            double result = Math.exp(value);
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
+    
+    private void calculateFactorial() {
+        try {
+            int value = Integer.parseInt(jTextField1.getText());
+            if (value < 0) {
+                showError("Faktorial hanya untuk bilangan positif");
+                return;
+            }
+            if (value > 20) {
+                showError("Angka terlalu besar (max 20)");
+                return;
+            }
+            
+            long result = 1;
+            for (int i = 2; i <= value; i++) {
+                result *= i;
+            }
+            
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input harus bilangan bulat");
+        }
+    }
+    
+    // private void calculateReciprocal() {
+    //     try {
+    //         double value = Double.parseDouble(jTextField1.getText());
+    //         if (value == 0) {
+    //             showError("Tidak bisa dibagi nol");
+    //             return;
+    //         }
+    //         double result = 1 / value;
+    //         displayResult(result);
+    //         startNewNumber = true;
+    //     } catch (NumberFormatException e) {
+    //         showError("Input tidak valid");
+    //     }
+    // }
+    
+    private void displayResult(double result) {
+        if (result == (long) result) {
+            jTextField1.setText(String.valueOf((long) result));
+        } else {
+            jTextField1.setText(String.format("%.10f", result).replaceAll("0*$", "").replaceAll("\\.$", ""));
+        }
+    }
+    
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        clear();
+    }
 
     /**
      * @param args the command line arguments
