@@ -1,5 +1,7 @@
 package ParkirPelabuhan;
 
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,12 +14,14 @@ package ParkirPelabuhan;
 public class KeluarForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(KeluarForm.class.getName());
-
+    private LarikKendaraan larikKendaraan;
     /**
      * Creates new form InputForm
      */
-    public KeluarForm() {
+    public KeluarForm(LarikKendaraan larikKendaraan) {
+        this.larikKendaraan = larikKendaraan;
         initComponents();
+        setupEventListeners();
     }
 
     /**
@@ -100,30 +104,105 @@ public class KeluarForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void setupEventListeners() {
+        okButton.addActionListener(evt -> {
+            keluarkanKendaraan();
+        });
+    }
+    
+    private void keluarkanKendaraan() {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+            String noPlat = jTextField1.getText().trim();
+            
+            if (noPlat.isEmpty()) {
+                JOptionPane.showMessageDialog(this, 
+                    "Nomor plat harus diisi!", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Cari kendaraan berdasarkan nomor plat
+            Kendaraan[] kendaraanArray = larikKendaraan.getKendaraan();
+            int index = larikKendaraan.getIndex();
+            int foundIndex = -1;
+            
+            for (int i = 0; i < index; i++) {
+                if (kendaraanArray[i].getNoKendaraan().equalsIgnoreCase(noPlat)) {
+                    foundIndex = i;
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            
+            if (foundIndex == -1) {
+                JOptionPane.showMessageDialog(this, 
+                    "Kendaraan dengan nomor plat " + noPlat + " tidak ditemukan!", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Update waktu pulang
+            Kendaraan kendaraan = kendaraanArray[foundIndex];
+            Waktu waktuPulang = new Waktu(new Date(), new Time());
+            waktuPulang.getDate().setNow();
+            waktuPulang.getTime().setNow();
+            kendaraan.setWaktuPulang(waktuPulang);
+            
+            // Hitung biaya
+            int biaya = kendaraan.hitungBiaya();
+            Time lamaJam = kendaraan.lamaJam();
+            int lamaHari = kendaraan.lamaHari();
+            
+            // Tampilkan informasi pembayaran
+            String info = String.format(
+                "=== INFORMASI PEMBAYARAN ===\n\n" +
+                "No. Plat: %s\n" +
+                "Jenis Kendaraan: %s\n" +
+                "Jenis Parkir: %s\n\n" +
+                "Waktu Masuk: %s %s\n" +
+                "Waktu Keluar: %s %s\n\n" +
+                "Lama Parkir:\n" +
+                "  - Hari: %d hari\n" +
+                "  - Jam: %02d:%02d:%02d\n\n" +
+                "TOTAL BIAYA: Rp %,d",
+                kendaraan.getNoKendaraan(),
+                kendaraan.getClass().getSimpleName(),
+                kendaraan.getStatusString(),
+                kendaraan.getWaktuDatang().getDate(),
+                kendaraan.getWaktuDatang().getTime(),
+                waktuPulang.getDate(),
+                waktuPulang.getTime(),
+                lamaHari,
+                lamaJam.getJam(), lamaJam.getMenit(), lamaJam.getDetik(),
+                biaya
+            );
+            
+            JOptionPane.showMessageDialog(this, 
+                info,
+                "Pembayaran Parkir", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            // Hapus kendaraan dari array
+            for (int i = foundIndex; i < index - 1; i++) {
+                kendaraanArray[i] = kendaraanArray[i + 1];
+            }
+            kendaraanArray[index - 1] = null;
+            larikKendaraan.setIndex(index - 1);
+            
+            // Reset form dan tutup
+            jTextField1.setText("");
+            this.dispose();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Terjadi kesalahan: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new KeluarForm().setVisible(true));
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;

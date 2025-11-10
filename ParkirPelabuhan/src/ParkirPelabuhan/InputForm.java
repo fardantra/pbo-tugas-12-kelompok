@@ -1,5 +1,7 @@
 package ParkirPelabuhan;
 
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,12 +14,15 @@ package ParkirPelabuhan;
 public class InputForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InputForm.class.getName());
+    private LarikKendaraan larikKendaraan;
 
     /**
      * Creates new form InputForm
      */
-    public InputForm() {
+    public InputForm(LarikKendaraan larikKendaraan) {
+        this.larikKendaraan = larikKendaraan;
         initComponents();
+        setupEventListeners();
     }
 
     /**
@@ -74,7 +79,7 @@ public class InputForm extends javax.swing.JFrame {
 
         jenisKendaraanLabel.setText("Jenis Kendaraan:");
 
-        jLabel5.setText("NIK:");
+        jLabel5.setText("No Plat:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -175,31 +180,104 @@ public class InputForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jenisKendaraanBoxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new InputForm().setVisible(true));
+     private void setupEventListeners() {
+        okButton.addActionListener(evt -> {
+            simpanKendaraan();
+        });
     }
-
+    
+    private void simpanKendaraan() {
+        try {
+            // Validasi input
+            String namaPemilik = jTextField1.getText().trim();
+            String nik1 = jTextField3.getText().trim();
+            String nik2 = jTextField4.getText().trim();
+            
+            if (namaPemilik.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nama pemilik harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (nik1.isEmpty() || nik2.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "NIK harus diisi lengkap!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Buat objek Person
+            Person pemilik = new Person();
+            pemilik.setNama(namaPemilik);
+            pemilik.setAlamat(nik1); // Menggunakan field nik pertama sebagai alamat sementara
+            
+            // Tentukan jenis kendaraan
+            String jenisKendaraan = (String) jenisKendaraanBox.getSelectedItem();
+            Kendaraan kendaraan = null;
+            
+            switch (jenisKendaraan) {
+                case "Motor":
+                    kendaraan = new Motor();
+                    break;
+                case "Mobil":
+                    kendaraan = new Mobil();
+                    break;
+                case "Truk":
+                    kendaraan = new Truk();
+                    break;
+            }
+            
+            if (kendaraan == null) {
+                JOptionPane.showMessageDialog(this, "Jenis kendaraan tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Set data kendaraan
+            kendaraan.setPemilik(pemilik);
+            kendaraan.setNoKendaraan(nik2); // Menggunakan nik2 sebagai nomor plat
+            
+            // Set status parkir
+            String jenisParkir = (String) jenisParkirBox.getSelectedItem();
+            kendaraan.setStatus(jenisParkir.equals("Menginap") ? 1 : 0);
+            
+            // Set waktu datang (sekarang)
+            Waktu waktuDatang = new Waktu(new Date(), new Time());
+            waktuDatang.getDate().setNow();
+            waktuDatang.getTime().setNow();
+            kendaraan.setWaktuDatang(waktuDatang);
+            
+            // Set waktu pulang (default sama dengan waktu datang, akan diupdate saat keluar)
+            Waktu waktuPulang = new Waktu(new Date(), new Time());
+            waktuPulang.getDate().setNow();
+            waktuPulang.getTime().setNow();
+            kendaraan.setWaktuPulang(waktuPulang);
+            
+            // Tambahkan ke larik kendaraan
+            larikKendaraan.tambahKendaraan(kendaraan);
+            
+            JOptionPane.showMessageDialog(this, 
+                "Kendaraan berhasil ditambahkan!\n" +
+                "No. Plat: " + kendaraan.getNoKendaraan() + "\n" +
+                "Jenis: " + jenisKendaraan + "\n" +
+                "Waktu Masuk: " + waktuDatang.getDate() + " " + waktuDatang.getTime(),
+                "Berhasil", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            // Reset form
+            jTextField1.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jenisKendaraanBox.setSelectedIndex(0);
+            jenisParkirBox.setSelectedIndex(0);
+            
+            // Tutup form
+            this.dispose();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Terjadi kesalahan: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
