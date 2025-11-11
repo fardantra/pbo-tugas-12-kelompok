@@ -1,5 +1,7 @@
 package ParkirPelabuhan;
 
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,12 +14,15 @@ package ParkirPelabuhan;
 public class InputForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InputForm.class.getName());
+    private LarikKendaraan larikKendaraan;
 
     /**
      * Creates new form InputForm
      */
-    public InputForm() {
+    public InputForm(LarikKendaraan larikKendaraan) {
+        this.larikKendaraan = larikKendaraan;
         initComponents();
+        setupEventListeners();
     }
 
     /**
@@ -31,16 +36,16 @@ public class InputForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        namaLabel = new javax.swing.JLabel();
+        namaField = new javax.swing.JTextField();
+        alamatLabel = new javax.swing.JLabel();
+        alamatField = new javax.swing.JTextField();
+        noPlatField = new javax.swing.JTextField();
+        noPlatLabel = new javax.swing.JLabel();
         jenisKendaraanBox = new javax.swing.JComboBox<>();
         jenisParkirBox = new javax.swing.JComboBox<>();
         jenisParkirLabel = new javax.swing.JLabel();
         jenisKendaraanLabel = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
         judulLabel = new javax.swing.JLabel();
 
@@ -52,9 +57,11 @@ public class InputForm extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setText("Nama Pemilik:");
+        namaLabel.setText("Nama Pemilik:");
 
-        jLabel4.setText("NIK:");
+        alamatLabel.setText("Alamat:");
+
+        noPlatLabel.setText("No Plat:");
 
         jenisKendaraanBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mobil", "Motor", "Truk" }));
         jenisKendaraanBox.addActionListener(new java.awt.event.ActionListener() {
@@ -74,8 +81,6 @@ public class InputForm extends javax.swing.JFrame {
 
         jenisKendaraanLabel.setText("Jenis Kendaraan:");
 
-        jLabel5.setText("NIK:");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -86,17 +91,17 @@ public class InputForm extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(namaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(alamatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(noPlatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
+                            .addComponent(alamatField, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(namaField)
+                            .addComponent(noPlatField, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jenisParkirLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -112,16 +117,16 @@ public class InputForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaLabel)
+                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(alamatField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(alamatLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(noPlatField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noPlatLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jenisKendaraanBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,45 +180,118 @@ public class InputForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jenisKendaraanBoxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new InputForm().setVisible(true));
+     private void setupEventListeners() {
+        okButton.addActionListener(evt -> {
+            simpanKendaraan();
+        });
     }
-
+    
+    private void simpanKendaraan() {
+        try {
+            // Validasi input
+            String namaPemilik = namaField.getText().trim();
+            String alamat = alamatField.getText().trim();
+            String noPlat = noPlatField.getText().trim();
+            
+            if (namaPemilik.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nama pemilik harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (alamat.isEmpty() || noPlat.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Alamat harus diisi lengkap!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Buat objek Person
+            Person pemilik = new Person();
+            pemilik.setNama(namaPemilik);
+            pemilik.setAlamat(alamat); 
+            
+            // Tentukan jenis kendaraan
+            String jenisKendaraan = (String) jenisKendaraanBox.getSelectedItem();
+            Kendaraan kendaraan = null;
+            
+            switch (jenisKendaraan) {
+                case "Motor":
+                    kendaraan = new Motor();
+                    break;
+                case "Mobil":
+                    kendaraan = new Mobil();
+                    break;
+                case "Truk":
+                    kendaraan = new Truk();
+                    break;
+            }
+            
+            if (kendaraan == null) {
+                JOptionPane.showMessageDialog(this, "Jenis kendaraan tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Set data kendaraan
+            kendaraan.setPemilik(pemilik);
+            kendaraan.setNoKendaraan(noPlat); 
+            
+            // Set status parkir
+            String jenisParkir = (String) jenisParkirBox.getSelectedItem();
+            kendaraan.setStatus(jenisParkir.equals("Menginap") ? 1 : 0);
+            
+            // Set waktu datang (sekarang)
+            Waktu waktuDatang = new Waktu(new Date(), new Time());
+            waktuDatang.getDate().setNow();
+            waktuDatang.getTime().setNow();
+            kendaraan.setWaktuDatang(waktuDatang);
+            
+            // Set waktu pulang (default sama dengan waktu datang, akan diupdate saat keluar)
+            Waktu waktuPulang = new Waktu(new Date(), new Time());
+            waktuPulang.getDate().setNow();
+            waktuPulang.getTime().setNow();
+            kendaraan.setWaktuPulang(waktuPulang);
+            
+            // Tambahkan ke larik kendaraan
+            larikKendaraan.tambahKendaraan(kendaraan);
+            
+            JOptionPane.showMessageDialog(this, 
+                "Kendaraan berhasil ditambahkan!\n" +
+                "No. Plat: " + kendaraan.getNoKendaraan() + "\n" +
+                "Jenis: " + jenisKendaraan + "\n" +
+                "Waktu Masuk: " + waktuDatang.getDate() + " " + waktuDatang.getTime(),
+                "Berhasil", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            // Reset form
+            namaField.setText("");
+            alamatField.setText("");
+            noPlatField.setText("");
+            jenisKendaraanBox.setSelectedIndex(0);
+            jenisParkirBox.setSelectedIndex(0);
+            
+            // Tutup form
+            this.dispose();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Terjadi kesalahan: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField alamatField;
+    private javax.swing.JLabel alamatLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox<String> jenisKendaraanBox;
     private javax.swing.JLabel jenisKendaraanLabel;
     private javax.swing.JComboBox<String> jenisParkirBox;
     private javax.swing.JLabel jenisParkirLabel;
     private javax.swing.JLabel judulLabel;
+    private javax.swing.JTextField namaField;
+    private javax.swing.JLabel namaLabel;
+    private javax.swing.JTextField noPlatField;
+    private javax.swing.JLabel noPlatLabel;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

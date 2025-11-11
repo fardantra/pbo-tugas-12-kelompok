@@ -87,21 +87,21 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel3" min="-2" pref="95" max="-2" attributes="0"/>
+                                      <Component id="namaLabel" min="-2" pref="95" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel4" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" min="-2" pref="95" max="-2" attributes="0"/>
+                                          <Component id="alamatLabel" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                                          <Component id="noPlatLabel" min="-2" pref="95" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jTextField3" pref="165" max="32767" attributes="0"/>
-                                  <Component id="jTextField1" max="32767" attributes="0"/>
-                                  <Component id="jTextField4" pref="165" max="32767" attributes="0"/>
+                                  <Component id="alamatField" pref="165" max="32767" attributes="0"/>
+                                  <Component id="namaField" max="32767" attributes="0"/>
+                                  <Component id="noPlatField" pref="165" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -125,18 +125,18 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="namaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="namaField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="alamatField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="alamatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="noPlatField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="noPlatLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -154,16 +154,25 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="namaLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nama Pemilik:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="namaField">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
+            <Component class="javax.swing.JLabel" name="alamatLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="NIK:"/>
+                <Property name="text" type="java.lang.String" value="Alamat:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="alamatField">
+            </Component>
+            <Component class="javax.swing.JTextField" name="noPlatField">
+            </Component>
+            <Component class="javax.swing.JLabel" name="noPlatLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="No Plat:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jenisKendaraanBox">
@@ -207,15 +216,6 @@
             <Component class="javax.swing.JLabel" name="jenisKendaraanLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Jenis Kendaraan:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextField4">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="NIK:"/>
               </Properties>
             </Component>
           </SubComponents>

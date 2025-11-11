@@ -1,5 +1,7 @@
 package ParkirPelabuhan;
 
+import javax.swing.JOptionPane;     
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,12 +14,14 @@ package ParkirPelabuhan;
 public class ParkirPelabuhanForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParkirPelabuhanForm.class.getName());
-
+    private LarikKendaraan larikKendaraan;
     /**
      * Creates new form ParkirPelabuhanForm
      */
     public ParkirPelabuhanForm() {
         initComponents();
+        larikKendaraan = new LarikKendaraan(100);
+        setupEventListeners();
     }
 
     /**
@@ -93,7 +97,58 @@ public class ParkirPelabuhanForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+private void setupEventListeners() {
+        jButton2.addActionListener(evt -> {
+            InputForm inputForm = new InputForm(larikKendaraan);
+            inputForm.setLocationRelativeTo(this);
+            inputForm.setVisible(true);
+        });
+        
+        jButton3.addActionListener(evt -> {
+            KeluarForm keluarForm = new KeluarForm(larikKendaraan);
+            keluarForm.setLocationRelativeTo(this);
+            keluarForm.setVisible(true);
+        });
+        
+        jButton4.addActionListener(evt -> {
+            TampilForm tampilForm = new TampilForm(larikKendaraan);
+            tampilForm.setLocationRelativeTo(this);
+            tampilForm.setVisible(true);
+        });
+        
+        jButton5.addActionListener(evt -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Apakah Anda yakin ingin mengeluarkan semua kendaraan?",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION
+            );
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                int jumlah = larikKendaraan.getIndex();
+                larikKendaraan = new LarikKendaraan(100);
+                JOptionPane.showMessageDialog(
+                    this,
+                    jumlah + " kendaraan telah dikeluarkan dari parkir.",
+                    "Berhasil",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+        
+        jButton6.addActionListener(evt -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Apakah Anda yakin ingin keluar?",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION
+            );
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
+    }    
     
     /**
      * @param args the command line arguments

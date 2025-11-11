@@ -1,5 +1,7 @@
 package ParkirPelabuhan;
 
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,12 +14,16 @@ package ParkirPelabuhan;
 public class TampilForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TampilForm.class.getName());
+    private LarikKendaraan larikKendaraan;
 
     /**
      * Creates new form InputForm
      */
-    public TampilForm() {
+    public TampilForm(LarikKendaraan larikKendaraan) {
+        this.larikKendaraan = larikKendaraan;
         initComponents();
+        setupEventListeners();
+        loadData();
     }
 
     /**
@@ -41,23 +47,23 @@ public class TampilForm extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "No. Plat", "Jenis Kendaraan", "Jenis Parkir", "Waktu Masuk", "Waktu Keluar", "Nama Pemilik", "NIK", "Biaya"
+                "No.", "No. Plat", "Jenis Kendaraan", "Jenis Parkir", "Waktu Masuk", "Nama Pemilik", "Alamat"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -100,30 +106,54 @@ public class TampilForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TampilForm().setVisible(true));
+     private void setupEventListeners() {
+        okButton.addActionListener(evt -> {
+            this.dispose();
+        });
     }
+    
+    private void loadData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        // Clear existing data
+        model.setRowCount(0);
+        
+        // Load kendaraan data
+        Kendaraan[] kendaraanArray = larikKendaraan.getKendaraan();
+        int index = larikKendaraan.getIndex();
+        
+        if (index == 0) {
+            // Jika tidak ada kendaraan
+            return;
+        }
+        
+        int totalBiaya = 0;
+        
+        for (int i = 0; i < index; i++) {
+            Kendaraan k = kendaraanArray[i];
+            Time lamaJam = k.lamaJam();
+            int biaya = k.hitungBiaya();
+            totalBiaya += biaya;
+            
+            Object[] row = {
+                (i + 1),
+                k.getNoKendaraan(),
+                k.getClass().getSimpleName(),
+                k.getStatusString(),
+                k.getWaktuDatang().getDate().toString() + " " + k.getWaktuDatang().getTime().toString(),
+                k.getPemilik().getNama(),
+                k.getPemilik().getAlamat(),
+                String.format("Rp %,d", biaya)
+            };
+            
+            model.addRow(row);
+        }
+        
+        // Update label dengan total biaya
+        jLabel1.setText(String.format("Kendaraan yang Parkir (Total: %d | Total Biaya: Rp %,d)", 
+            index, totalBiaya));
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
