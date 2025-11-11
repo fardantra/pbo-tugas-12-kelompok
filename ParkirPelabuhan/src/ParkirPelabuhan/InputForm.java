@@ -36,16 +36,16 @@ public class InputForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        namaLabel = new javax.swing.JLabel();
+        namaField = new javax.swing.JTextField();
+        alamatLabel = new javax.swing.JLabel();
+        alamatField = new javax.swing.JTextField();
+        noPlatField = new javax.swing.JTextField();
+        noPlatLabel = new javax.swing.JLabel();
         jenisKendaraanBox = new javax.swing.JComboBox<>();
         jenisParkirBox = new javax.swing.JComboBox<>();
         jenisParkirLabel = new javax.swing.JLabel();
         jenisKendaraanLabel = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
         judulLabel = new javax.swing.JLabel();
 
@@ -57,9 +57,11 @@ public class InputForm extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setText("Nama Pemilik:");
+        namaLabel.setText("Nama Pemilik:");
 
-        jLabel4.setText("NIK:");
+        alamatLabel.setText("Alamat:");
+
+        noPlatLabel.setText("No Plat:");
 
         jenisKendaraanBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mobil", "Motor", "Truk" }));
         jenisKendaraanBox.addActionListener(new java.awt.event.ActionListener() {
@@ -79,8 +81,6 @@ public class InputForm extends javax.swing.JFrame {
 
         jenisKendaraanLabel.setText("Jenis Kendaraan:");
 
-        jLabel5.setText("No Plat:");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -91,17 +91,17 @@ public class InputForm extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(namaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(alamatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(noPlatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
+                            .addComponent(alamatField, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(namaField)
+                            .addComponent(noPlatField, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jenisParkirLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -117,16 +117,16 @@ public class InputForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaLabel)
+                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(alamatField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(alamatLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(noPlatField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noPlatLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jenisKendaraanBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,24 +189,24 @@ public class InputForm extends javax.swing.JFrame {
     private void simpanKendaraan() {
         try {
             // Validasi input
-            String namaPemilik = jTextField1.getText().trim();
-            String nik1 = jTextField3.getText().trim();
-            String nik2 = jTextField4.getText().trim();
+            String namaPemilik = namaField.getText().trim();
+            String alamat = alamatField.getText().trim();
+            String noPlat = noPlatField.getText().trim();
             
             if (namaPemilik.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nama pemilik harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
-            if (nik1.isEmpty() || nik2.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "NIK harus diisi lengkap!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (alamat.isEmpty() || noPlat.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Alamat harus diisi lengkap!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
             // Buat objek Person
             Person pemilik = new Person();
             pemilik.setNama(namaPemilik);
-            pemilik.setAlamat(nik1); // Menggunakan field nik pertama sebagai alamat sementara
+            pemilik.setAlamat(alamat); 
             
             // Tentukan jenis kendaraan
             String jenisKendaraan = (String) jenisKendaraanBox.getSelectedItem();
@@ -231,7 +231,7 @@ public class InputForm extends javax.swing.JFrame {
             
             // Set data kendaraan
             kendaraan.setPemilik(pemilik);
-            kendaraan.setNoKendaraan(nik2); // Menggunakan nik2 sebagai nomor plat
+            kendaraan.setNoKendaraan(noPlat); 
             
             // Set status parkir
             String jenisParkir = (String) jenisParkirBox.getSelectedItem();
@@ -261,9 +261,9 @@ public class InputForm extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
             
             // Reset form
-            jTextField1.setText("");
-            jTextField3.setText("");
-            jTextField4.setText("");
+            namaField.setText("");
+            alamatField.setText("");
+            noPlatField.setText("");
             jenisKendaraanBox.setSelectedIndex(0);
             jenisParkirBox.setSelectedIndex(0);
             
@@ -279,19 +279,19 @@ public class InputForm extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField alamatField;
+    private javax.swing.JLabel alamatLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox<String> jenisKendaraanBox;
     private javax.swing.JLabel jenisKendaraanLabel;
     private javax.swing.JComboBox<String> jenisParkirBox;
     private javax.swing.JLabel jenisParkirLabel;
     private javax.swing.JLabel judulLabel;
+    private javax.swing.JTextField namaField;
+    private javax.swing.JLabel namaLabel;
+    private javax.swing.JTextField noPlatField;
+    private javax.swing.JLabel noPlatLabel;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

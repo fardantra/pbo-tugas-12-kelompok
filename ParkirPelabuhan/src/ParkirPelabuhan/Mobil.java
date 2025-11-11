@@ -25,7 +25,7 @@ public class Mobil extends Kendaraan {
         else {
             Time t = lamaJam();
             double jam = t.getJam() + t.getMenit()/60.0;
-            return (int)Math.ceil(jam) * 2000;
+            return (int)Math.ceil(jam) * 3000;
         }
     }
 }

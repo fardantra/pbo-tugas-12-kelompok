@@ -59,7 +59,7 @@ public class TampilForm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "No. Plat", "Jenis Kendaraan", "Jenis Parkir", "Waktu Masuk", "Nama Pemilik", "NIK"
+                "No.", "No. Plat", "Jenis Kendaraan", "Jenis Parkir", "Waktu Masuk", "Nama Pemilik", "Alamat"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -141,7 +141,6 @@ public class TampilForm extends javax.swing.JFrame {
                 k.getClass().getSimpleName(),
                 k.getStatusString(),
                 k.getWaktuDatang().getDate().toString() + " " + k.getWaktuDatang().getTime().toString(),
-                k.getWaktuPulang().getDate().toString() + " " + k.getWaktuPulang().getTime().toString(),
                 k.getPemilik().getNama(),
                 k.getPemilik().getAlamat(),
                 String.format("Rp %,d", biaya)

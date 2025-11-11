@@ -81,7 +81,7 @@
                     <Column editable="false" title="Jenis Parkir" type="java.lang.Object"/>
                     <Column editable="false" title="Waktu Masuk" type="java.lang.Object"/>
                     <Column editable="false" title="Nama Pemilik" type="java.lang.Object"/>
-                    <Column editable="false" title="NIK" type="java.lang.Object"/>
+                    <Column editable="false" title="Alamat" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
