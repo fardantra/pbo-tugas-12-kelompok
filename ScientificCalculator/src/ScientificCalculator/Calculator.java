@@ -1,3 +1,5 @@
+package ScientificCalculator;
+
 /**
  * Class Calculator - Logika perhitungan kalkulator
  * 
