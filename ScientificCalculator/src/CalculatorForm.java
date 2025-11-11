@@ -15,6 +15,7 @@ public class CalculatorForm extends javax.swing.JFrame {
     private double num2 = 0;
     private String operator = "";
     private boolean startNewNumber = true;
+    private String history = "";
 
     /**
      * Creates new form CalculatorForm
@@ -542,7 +543,6 @@ public class CalculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
     
     private void setupButtonListeners() {
-        // TOMBOL ANGKA (0-9)
         zeroButton.addActionListener(e -> appendNumber("0"));
         oneButton.addActionListener(e -> appendNumber("1"));
         twoButton.addActionListener(e -> appendNumber("2"));
@@ -553,43 +553,37 @@ public class CalculatorForm extends javax.swing.JFrame {
         sevenButton.addActionListener(e -> appendNumber("7"));
         eightButton.addActionListener(e -> appendNumber("8"));
         nineButton.addActionListener(e -> appendNumber("9"));
-        
-        // TOMBOL TITIK DESIMAL
+
         dotButton.addActionListener(e -> {
             String current = jTextField1.getText();
             if (!current.contains(".")) {
                 jTextField1.setText(current + ".");
+                history = history + ".";
+                jTextField2.setText(history);
             }
         });
         
-        // TOMBOL OPERATOR DASAR
         plusButton.addActionListener(e -> setOperator("+"));
         minusButton.addActionListener(e -> setOperator("-"));
         multiplyButton.addActionListener(e -> setOperator("*"));
         divideButton.addActionListener(e -> setOperator("/"));
         
-        // TOMBOL SAMA DENGAN
         equalButton.addActionListener(e -> calculate());
         
-        // TOMBOL CLEAR DAN DELETE
         clearButton.addActionListener(e -> clear());
         delButton.addActionListener(e -> deleteLastChar());
         
-        // TOMBOL PLUS/MINUS
         plusMinusButton.addActionListener(e -> toggleSign());
         
-        // TOMBOL PERSEN
         percentButton.addActionListener(e -> calculatePercent());
-        
-        // FUNGSI SCIENTIFIC
+
         sinButton.addActionListener(e -> calculateTrig("sin"));
         cosButton.addActionListener(e -> calculateTrig("cos"));
         tanButton.addActionListener(e -> calculateTrig("tan"));
         sinhButton.addActionListener(e -> calculateTrig("sinh"));
         coshButton.addActionListener(e -> calculateTrig("cosh"));
         tanhButton.addActionListener(e -> calculateTrig("tanh"));
-        
-        // FUNGSI PANGKAT DAN AKAR
+
         power2Button.addActionListener(e -> calculatePower(2));
         power3Button.addActionListener(e -> calculatePower(3));
         powerYButton.addActionListener(e -> setOperator("^"));
@@ -598,7 +592,7 @@ public class CalculatorForm extends javax.swing.JFrame {
         logButton.addActionListener(e -> calculateLog());
         expButton.addActionListener(e -> calculateExp());
         factorialButton.addActionListener(e -> calculateFactorial());
-        // reciprocalButton.addActionListener(e -> calculateReciprocal());
+        reciprocalButton.addActionListener(e -> calculateReciprocal());
     }
     
     private void appendNumber(String number) {
@@ -606,9 +600,30 @@ public class CalculatorForm extends javax.swing.JFrame {
         if (startNewNumber || current.equals("0")) {
             jTextField1.setText(number);
             startNewNumber = false;
+            if (history.isEmpty() || history.endsWith(" = ")) {
+                history = number;
+            } else {
+                history = history + number;
+            }
         } else {
             jTextField1.setText(current + number);
+            history = history + number;
         }
+        syncHistoryWithDisplay();
+    }
+    
+    private void syncHistoryWithDisplay() {
+        String[] parts = history.split(" ");
+        if (parts.length > 0) {
+            String lastPart = parts[parts.length - 1];
+            String currentDisplay = jTextField1.getText();
+            
+            if (!lastPart.matches("[+\\-*/^]")) {
+                history = history.substring(0, history.length() - lastPart.length()) + currentDisplay;
+            }
+        }
+        
+        jTextField2.setText(history);
     }
     
     private void setOperator(String op) {
@@ -616,6 +631,10 @@ public class CalculatorForm extends javax.swing.JFrame {
             num1 = Double.parseDouble(jTextField1.getText());
             operator = op;
             startNewNumber = true;
+
+            history = history + " " + op + " ";
+            jTextField2.setText(history);
+
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -649,6 +668,9 @@ public class CalculatorForm extends javax.swing.JFrame {
                 default:
                     return;
             }
+
+            history = history + " = ";
+            jTextField2.setText(history);
             
             displayResult(result);
             operator = "";
@@ -664,21 +686,37 @@ public class CalculatorForm extends javax.swing.JFrame {
         num2 = 0;
         operator = "";
         startNewNumber = true;
+        
+        history = "";
+        jTextField2.setText("");
     }
     
     private void deleteLastChar() {
+        if (history.contains("=")) {
+            clear();
+            return;
+        }
+        
         String current = jTextField1.getText();
+        
         if (current.length() > 1) {
             jTextField1.setText(current.substring(0, current.length() - 1));
         } else {
             jTextField1.setText("0");
         }
+
+        syncHistoryWithDisplay();
     }
     
     private void toggleSign() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
             displayResult(-value);
+            
+            if (!history.isEmpty()) {
+                history = history.replaceAll("[0-9.]+$", jTextField1.getText());
+                jTextField2.setText(history);
+            }
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -688,6 +726,10 @@ public class CalculatorForm extends javax.swing.JFrame {
         try {
             double value = Double.parseDouble(jTextField1.getText());
             displayResult(value / 100);
+        
+            history = jTextField1.getText() + "%";
+            jTextField2.setText(history);
+            startNewNumber = true;
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -719,6 +761,9 @@ public class CalculatorForm extends javax.swing.JFrame {
                     result = Math.tanh(radians);
                     break;
             }
+
+            history = function + "(" + value + ")";
+            jTextField2.setText(history);
             
             displayResult(result);
             startNewNumber = true;
@@ -731,6 +776,10 @@ public class CalculatorForm extends javax.swing.JFrame {
         try {
             double value = Double.parseDouble(jTextField1.getText());
             double result = Math.pow(value, power);
+            
+            history = value + "^" + power;
+            jTextField2.setText(history);
+            
             displayResult(result);
             startNewNumber = true;
         } catch (NumberFormatException e) {
@@ -746,6 +795,10 @@ public class CalculatorForm extends javax.swing.JFrame {
                 return;
             }
             double result = Math.sqrt(value);
+            
+            history = "√(" + value + ")";
+            jTextField2.setText(history);
+            
             displayResult(result);
             startNewNumber = true;
         } catch (NumberFormatException e) {
@@ -761,6 +814,10 @@ public class CalculatorForm extends javax.swing.JFrame {
                 return;
             }
             double result = Math.log10(value);
+            
+            history = "log(" + value + ")";
+            jTextField2.setText(history);
+            
             displayResult(result);
             startNewNumber = true;
         } catch (NumberFormatException e) {
@@ -772,6 +829,10 @@ public class CalculatorForm extends javax.swing.JFrame {
         try {
             double value = Double.parseDouble(jTextField1.getText());
             double result = Math.exp(value);
+            
+            history = "e^(" + value + ")";
+            jTextField2.setText(history);
+            
             displayResult(result);
             startNewNumber = true;
         } catch (NumberFormatException e) {
@@ -795,6 +856,9 @@ public class CalculatorForm extends javax.swing.JFrame {
             for (int i = 2; i <= value; i++) {
                 result *= i;
             }
+
+            history = value + "!";
+            jTextField2.setText(history);
             
             displayResult(result);
             startNewNumber = true;
@@ -803,20 +867,24 @@ public class CalculatorForm extends javax.swing.JFrame {
         }
     }
     
-    // private void calculateReciprocal() {
-    //     try {
-    //         double value = Double.parseDouble(jTextField1.getText());
-    //         if (value == 0) {
-    //             showError("Tidak bisa dibagi nol");
-    //             return;
-    //         }
-    //         double result = 1 / value;
-    //         displayResult(result);
-    //         startNewNumber = true;
-    //     } catch (NumberFormatException e) {
-    //         showError("Input tidak valid");
-    //     }
-    // }
+    private void calculateReciprocal() {
+        try {
+            double value = Double.parseDouble(jTextField1.getText());
+            if (value == 0) {
+                showError("Tidak bisa dibagi nol");
+                return;
+            }
+            double result = 1 / value;
+            
+            history = "1/(" + value + ")";
+            jTextField2.setText(history);
+            
+            displayResult(result);
+            startNewNumber = true;
+        } catch (NumberFormatException e) {
+            showError("Input tidak valid");
+        }
+    }
     
     private void displayResult(double result) {
         if (result == (long) result) {
