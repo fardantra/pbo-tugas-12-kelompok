@@ -240,7 +240,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -708,13 +708,13 @@
               <Color blue="e3" green="d8" red="da" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="10" style="0"/>
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e3" green="d8" red="da" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&#xa9; Jovianie Felisia Suryadi, Fardan Fadhilah Andicha Putra, Newten Putra Santoso"/>
+            <Property name="text" type="java.lang.String" value="@ 140810240010 | 140810240084 | 140810240090"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField2">

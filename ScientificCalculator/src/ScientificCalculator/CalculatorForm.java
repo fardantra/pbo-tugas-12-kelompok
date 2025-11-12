@@ -316,10 +316,10 @@ public class CalculatorForm extends javax.swing.JFrame {
         plusMinusButton.setText("+/-");
 
         jLabel1.setBackground(new java.awt.Color(218, 216, 227));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(218, 216, 227));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("© Jovianie Felisia Suryadi, Fardan Fadhilah Andicha Putra, Newten Putra Santoso");
+        jLabel1.setText("@ 140810240010 | 140810240084 | 140810240090");
 
         jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(30, 30, 32));
@@ -487,7 +487,7 @@ public class CalculatorForm extends javax.swing.JFrame {
                     .addComponent(plusMinusButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 395, 640));
