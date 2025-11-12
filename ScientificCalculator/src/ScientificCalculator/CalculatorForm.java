@@ -13,17 +13,14 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalculatorForm.class.getName());
 
-    private double num1 = 0;
-    private double num2 = 0;
-    private String operator = "";
-    private boolean startNewNumber = true;
-    private String history = "";
+    private Calculator calc;
 
     /**
      * Creates new form CalculatorForm
      */
     public CalculatorForm() {
         initComponents();
+        calc = new Calculator();
         setupButtonListeners();
     }
 
@@ -560,8 +557,8 @@ public class CalculatorForm extends javax.swing.JFrame {
             String current = jTextField1.getText();
             if (!current.contains(".")) {
                 jTextField1.setText(current + ".");
-                history = history + ".";
-                jTextField2.setText(history);
+                calc.appendToHistory(".");
+                jTextField2.setText(calc.getHistory());
             }
         });
         
@@ -599,44 +596,27 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void appendNumber(String number) {
         String current = jTextField1.getText();
-        if (startNewNumber || current.equals("0")) {
+        if (calc.isStartNewNumber() || current.equals("0")) {
             jTextField1.setText(number);
-            startNewNumber = false;
-            if (history.isEmpty() || history.endsWith(" = ")) {
-                history = number;
-            } else {
-                history = history + number;
-            }
+            calc.setStartNewNumber(false);
+            calc.appendToHistory(number);
         } else {
             jTextField1.setText(current + number);
-            history = history + number;
+            calc.appendToHistory(number);
         }
-        syncHistoryWithDisplay();
-    }
-    
-    private void syncHistoryWithDisplay() {
-        String[] parts = history.split(" ");
-        if (parts.length > 0) {
-            String lastPart = parts[parts.length - 1];
-            String currentDisplay = jTextField1.getText();
-            
-            if (!lastPart.matches("[+\\-*/^]")) {
-                history = history.substring(0, history.length() - lastPart.length()) + currentDisplay;
-            }
-        }
-        
-        jTextField2.setText(history);
+                
+        calc.syncHistoryWithDisplay(jTextField1.getText());
+        jTextField2.setText(calc.getHistory());
     }
     
     private void setOperator(String op) {
         try {
-            num1 = Double.parseDouble(jTextField1.getText());
-            operator = op;
-            startNewNumber = true;
-
-            history = history + " " + op + " ";
-            jTextField2.setText(history);
-
+            double value = Double.parseDouble(jTextField1.getText());
+            calc.setNum1(value);
+            calc.setOperator(op);
+            calc.setStartNewNumber(true);
+            calc.appendOperatorToHistory(op);
+            jTextField2.setText(calc.getHistory());
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -644,57 +624,33 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculate() {
         try {
-            num2 = Double.parseDouble(jTextField1.getText());
-            double result = 0;
+            double value = Double.parseDouble(jTextField1.getText());
+            calc.setNum2(value);
             
-            switch (operator) {
-                case "+":
-                    result = num1 + num2;
-                    break;
-                case "-":
-                    result = num1 - num2;
-                    break;
-                case "*":
-                    result = num1 * num2;
-                    break;
-                case "/":
-                    if (num2 == 0) {
-                        showError("Tidak bisa dibagi nol");
-                        return;
-                    }
-                    result = num1 / num2;
-                    break;
-                case "^":
-                    result = Math.pow(num1, num2);
-                    break;
-                default:
-                    return;
-            }
-
-            history = history + " = ";
-            jTextField2.setText(history);
+            double result = calc.calculate();
             
-            displayResult(result);
-            operator = "";
-            startNewNumber = true;
+            calc.appendEqualsToHistory();
+            jTextField2.setText(calc.getHistory());
+            
+            jTextField1.setText(calc.formatResult(result));
+            calc.setStartNewNumber(true);
+            calc.setOperator("");
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
+        } catch (ArithmeticException e) {
+            showError(e.getMessage());
         }
     }
     
     private void clear() {
         jTextField1.setText("0");
-        num1 = 0;
-        num2 = 0;
-        operator = "";
-        startNewNumber = true;
-        
-        history = "";
         jTextField2.setText("");
+        calc.clear();
     }
     
     private void deleteLastChar() {
-        if (history.contains("=")) {
+        if (calc.getHistory().contains("=")) {
             clear();
             return;
         }
@@ -707,18 +663,20 @@ public class CalculatorForm extends javax.swing.JFrame {
             jTextField1.setText("0");
         }
 
-        syncHistoryWithDisplay();
+        calc.syncHistoryWithDisplay(jTextField1.getText());
+        jTextField2.setText(calc.getHistory());
     }
     
     private void toggleSign() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            displayResult(-value);
             
-            if (!history.isEmpty()) {
-                history = history.replaceAll("[0-9.]+$", jTextField1.getText());
-                jTextField2.setText(history);
-            }
+            double result = calc.toggleSign(value);
+            
+            jTextField1.setText(calc.formatResult(result));
+            calc.updateHistoryForToggleSign(jTextField1.getText());
+            jTextField2.setText(calc.getHistory());
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -727,11 +685,13 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void calculatePercent() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            displayResult(value / 100);
-        
-            history = jTextField1.getText() + "%";
-            jTextField2.setText(history);
-            startNewNumber = true;
+          
+            double result = calc.calculatePercent(value);
+            
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -740,35 +700,13 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void calculateTrig(String function) {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            double radians = Math.toRadians(value);
-            double result = 0;
             
-            switch (function) {
-                case "sin":
-                    result = Math.sin(radians);
-                    break;
-                case "cos":
-                    result = Math.cos(radians);
-                    break;
-                case "tan":
-                    result = Math.tan(radians);
-                    break;
-                case "sinh":
-                    result = Math.sinh(radians);
-                    break;
-                case "cosh":
-                    result = Math.cosh(radians);
-                    break;
-                case "tanh":
-                    result = Math.tanh(radians);
-                    break;
-            }
-
-            history = function + "(" + value + ")";
-            jTextField2.setText(history);
+            double result = calc.calculateTrig(function, value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -777,13 +715,13 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void calculatePower(int power) {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            double result = Math.pow(value, power);
             
-            history = value + "^" + power;
-            jTextField2.setText(history);
+            double result = calc.calculatePower(value, power);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -792,51 +730,47 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void calculateRoot() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            if (value < 0) {
-                showError("Tidak bisa akar dari bilangan negatif");
-                return;
-            }
-            double result = Math.sqrt(value);
             
-            history = "√(" + value + ")";
-            jTextField2.setText(history);
+            double result = calc.calculateRoot(value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
+        } catch (ArithmeticException e) {
+            showError(e.getMessage());
         }
     }
     
     private void calculateLog() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            if (value <= 0) {
-                showError("Log hanya untuk bilangan positif");
-                return;
-            }
-            double result = Math.log10(value);
             
-            history = "log(" + value + ")";
-            jTextField2.setText(history);
+            double result = calc.calculateLog(value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
+        } catch (ArithmeticException e) {
+            showError(e.getMessage());
         }
     }
     
     private void calculateExp() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            double result = Math.exp(value);
             
-            history = "e^(" + value + ")";
-            jTextField2.setText(history);
+            double result = calc.calculateExp(value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -845,46 +779,34 @@ public class CalculatorForm extends javax.swing.JFrame {
     private void calculateFactorial() {
         try {
             int value = Integer.parseInt(jTextField1.getText());
-            if (value < 0) {
-                showError("Faktorial hanya untuk bilangan positif");
-                return;
-            }
-            if (value > 20) {
-                showError("Angka terlalu besar (max 20)");
-                return;
-            }
             
-            long result = 1;
-            for (int i = 2; i <= value; i++) {
-                result *= i;
-            }
-
-            history = value + "!";
-            jTextField2.setText(history);
+            long result = calc.calculateFactorial(value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(String.valueOf(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input harus bilangan bulat");
+        } catch (ArithmeticException e) {
+            showError(e.getMessage());
         }
     }
     
     private void calculateReciprocal() {
         try {
             double value = Double.parseDouble(jTextField1.getText());
-            if (value == 0) {
-                showError("Tidak bisa dibagi nol");
-                return;
-            }
-            double result = 1 / value;
             
-            history = "1/(" + value + ")";
-            jTextField2.setText(history);
+            double result = calc.calculateReciprocal(value);
             
-            displayResult(result);
-            startNewNumber = true;
+            jTextField1.setText(calc.formatResult(result));
+            jTextField2.setText(calc.getHistory());
+            calc.setStartNewNumber(true);
+            
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
+        } catch (ArithmeticException e) {
+            showError(e.getMessage());
         }
     }
     
