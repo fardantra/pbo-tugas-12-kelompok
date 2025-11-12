@@ -35,9 +35,9 @@ public class CalculatorForm extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        resultField = new javax.swing.JTextField();
         tanButton = new javax.swing.JButton();
         cosButton = new javax.swing.JButton();
         sinButton = new javax.swing.JButton();
@@ -72,8 +72,8 @@ public class CalculatorForm extends javax.swing.JFrame {
         power3Button = new javax.swing.JButton();
         factorialButton = new javax.swing.JButton();
         plusMinusButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        copyrightLabel = new javax.swing.JLabel();
+        historyLabel = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -93,7 +93,7 @@ public class CalculatorForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(44, 44, 80));
         jPanel1.setPreferredSize(new java.awt.Dimension(390, 640));
 
-        jPanel2.setBackground(new java.awt.Color(44, 44, 80));
+        titleLabel.setBackground(new java.awt.Color(44, 44, 80));
 
         jLabel2.setFont(new java.awt.Font("Eurostile-Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(218, 216, 227));
@@ -101,31 +101,31 @@ public class CalculatorForm extends javax.swing.JFrame {
         jLabel2.setText("SCIENTIFIC CALCULATOR");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout titleLabelLayout = new javax.swing.GroupLayout(titleLabel);
+        titleLabel.setLayout(titleLabelLayout);
+        titleLabelLayout.setHorizontalGroup(
+            titleLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleLabelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        titleLabelLayout.setVerticalGroup(
+            titleLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titleLabelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(215, 226, 228));
-        jTextField1.setFont(new java.awt.Font("DS-Digital", 3, 36)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(30, 30, 32));
-        jTextField1.setText("0");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        resultField.setEditable(false);
+        resultField.setBackground(new java.awt.Color(215, 226, 228));
+        resultField.setFont(new java.awt.Font("DS-Digital", 3, 36)); // NOI18N
+        resultField.setForeground(new java.awt.Color(30, 30, 32));
+        resultField.setText("0");
+        resultField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                resultFieldActionPerformed(evt);
             }
         });
 
@@ -312,21 +312,21 @@ public class CalculatorForm extends javax.swing.JFrame {
         plusMinusButton.setForeground(new java.awt.Color(218, 216, 227));
         plusMinusButton.setText("+/-");
 
-        jLabel1.setBackground(new java.awt.Color(218, 216, 227));
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(218, 216, 227));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("@ 140810240010 | 140810240084 | 140810240090");
+        copyrightLabel.setBackground(new java.awt.Color(218, 216, 227));
+        copyrightLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 10)); // NOI18N
+        copyrightLabel.setForeground(new java.awt.Color(218, 216, 227));
+        copyrightLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        copyrightLabel.setText("@ 140810240010 | 140810240084 | 140810240090");
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(30, 30, 32));
-        jTextField2.setFont(new java.awt.Font("DS-Digital", 3, 24)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(215, 226, 228));
-        jTextField2.setText("0");
-        jTextField2.setFocusable(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        historyLabel.setEditable(false);
+        historyLabel.setBackground(new java.awt.Color(30, 30, 32));
+        historyLabel.setFont(new java.awt.Font("DS-Digital", 3, 24)); // NOI18N
+        historyLabel.setForeground(new java.awt.Color(215, 226, 228));
+        historyLabel.setText("0");
+        historyLabel.setFocusable(false);
+        historyLabel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                historyLabelActionPerformed(evt);
             }
         });
 
@@ -410,25 +410,26 @@ public class CalculatorForm extends javax.swing.JFrame {
                                             .addComponent(cosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(tanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jTextField1)
-                                        .addComponent(jTextField2)))))
+                                        .addComponent(resultField)
+                                        .addComponent(historyLabel)))))
                         .addGap(0, 15, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(copyrightLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(historyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(resultField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -482,9 +483,9 @@ public class CalculatorForm extends javax.swing.JFrame {
                         .addComponent(dotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(zeroButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(plusMinusButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(copyrightLabel)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 395, 640));
@@ -533,13 +534,13 @@ public class CalculatorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_plusButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void resultFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_resultFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void historyLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyLabelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_historyLabelActionPerformed
     
     private void setupButtonListeners() {
         zeroButton.addActionListener(e -> appendNumber("0"));
@@ -554,11 +555,11 @@ public class CalculatorForm extends javax.swing.JFrame {
         nineButton.addActionListener(e -> appendNumber("9"));
 
         dotButton.addActionListener(e -> {
-            String current = jTextField1.getText();
+            String current = resultField.getText();
             if (!current.contains(".")) {
-                jTextField1.setText(current + ".");
+                resultField.setText(current + ".");
                 calc.appendToHistory(".");
-                jTextField2.setText(calc.getHistory());
+                historyLabel.setText(calc.getHistory());
             }
         });
         
@@ -595,28 +596,28 @@ public class CalculatorForm extends javax.swing.JFrame {
     }
     
     private void appendNumber(String number) {
-        String current = jTextField1.getText();
+        String current = resultField.getText();
         if (calc.isStartNewNumber() || current.equals("0")) {
-            jTextField1.setText(number);
+            resultField.setText(number);
             calc.setStartNewNumber(false);
             calc.appendToHistory(number);
         } else {
-            jTextField1.setText(current + number);
+            resultField.setText(current + number);
             calc.appendToHistory(number);
         }
                 
-        calc.syncHistoryWithDisplay(jTextField1.getText());
-        jTextField2.setText(calc.getHistory());
+        calc.syncHistoryWithDisplay(resultField.getText());
+        historyLabel.setText(calc.getHistory());
     }
     
     private void setOperator(String op) {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             calc.setNum1(value);
             calc.setOperator(op);
             calc.setStartNewNumber(true);
             calc.appendOperatorToHistory(op);
-            jTextField2.setText(calc.getHistory());
+            historyLabel.setText(calc.getHistory());
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
         }
@@ -624,15 +625,15 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculate() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             calc.setNum2(value);
             
             double result = calc.calculate();
             
             calc.appendEqualsToHistory();
-            jTextField2.setText(calc.getHistory());
+            historyLabel.setText(calc.getHistory());
             
-            jTextField1.setText(calc.formatResult(result));
+            resultField.setText(calc.formatResult(result));
             calc.setStartNewNumber(true);
             calc.setOperator("");
             
@@ -644,8 +645,8 @@ public class CalculatorForm extends javax.swing.JFrame {
     }
     
     private void clear() {
-        jTextField1.setText("0");
-        jTextField2.setText("");
+        resultField.setText("0");
+        historyLabel.setText("");
         calc.clear();
     }
     
@@ -655,27 +656,27 @@ public class CalculatorForm extends javax.swing.JFrame {
             return;
         }
         
-        String current = jTextField1.getText();
+        String current = resultField.getText();
         
         if (current.length() > 1) {
-            jTextField1.setText(current.substring(0, current.length() - 1));
+            resultField.setText(current.substring(0, current.length() - 1));
         } else {
-            jTextField1.setText("0");
+            resultField.setText("0");
         }
 
-        calc.syncHistoryWithDisplay(jTextField1.getText());
-        jTextField2.setText(calc.getHistory());
+        calc.syncHistoryWithDisplay(resultField.getText());
+        historyLabel.setText(calc.getHistory());
     }
     
     private void toggleSign() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.toggleSign(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            calc.updateHistoryForToggleSign(jTextField1.getText());
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            calc.updateHistoryForToggleSign(resultField.getText());
+            historyLabel.setText(calc.getHistory());
             
         } catch (NumberFormatException e) {
             showError("Input tidak valid");
@@ -684,12 +685,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculatePercent() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
           
             double result = calc.calculatePercent(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -699,12 +700,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateTrig(String function) {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculateTrig(function, value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -714,12 +715,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculatePower(int power) {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculatePower(value, power);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -729,12 +730,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateRoot() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculateRoot(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -746,12 +747,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateLog() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculateLog(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -763,12 +764,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateExp() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculateExp(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -778,12 +779,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateFactorial() {
         try {
-            int value = Integer.parseInt(jTextField1.getText());
+            int value = Integer.parseInt(resultField.getText());
             
             long result = calc.calculateFactorial(value);
             
-            jTextField1.setText(String.valueOf(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(String.valueOf(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -795,12 +796,12 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void calculateReciprocal() {
         try {
-            double value = Double.parseDouble(jTextField1.getText());
+            double value = Double.parseDouble(resultField.getText());
             
             double result = calc.calculateReciprocal(value);
             
-            jTextField1.setText(calc.formatResult(result));
-            jTextField2.setText(calc.getHistory());
+            resultField.setText(calc.formatResult(result));
+            historyLabel.setText(calc.getHistory());
             calc.setStartNewNumber(true);
             
         } catch (NumberFormatException e) {
@@ -812,9 +813,9 @@ public class CalculatorForm extends javax.swing.JFrame {
     
     private void displayResult(double result) {
         if (result == (long) result) {
-            jTextField1.setText(String.valueOf((long) result));
+            resultField.setText(String.valueOf((long) result));
         } else {
-            jTextField1.setText(String.format("%.10f", result).replaceAll("0*$", "").replaceAll("\\.$", ""));
+            resultField.setText(String.format("%.10f", result).replaceAll("0*$", "").replaceAll("\\.$", ""));
         }
     }
     
@@ -850,6 +851,7 @@ public class CalculatorForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
+    private javax.swing.JLabel copyrightLabel;
     private javax.swing.JButton cosButton;
     private javax.swing.JButton coshButton;
     private javax.swing.JButton delButton;
@@ -861,13 +863,10 @@ public class CalculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton factorialButton;
     private javax.swing.JButton fiveButton;
     private javax.swing.JButton fourButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField historyLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton logButton;
     private javax.swing.JButton minusButton;
     private javax.swing.JButton multiplyButton;
@@ -880,6 +879,7 @@ public class CalculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton power3Button;
     private javax.swing.JButton powerYButton;
     private javax.swing.JButton reciprocalButton;
+    private javax.swing.JTextField resultField;
     private javax.swing.JButton rootButton;
     private javax.swing.JButton sevenButton;
     private javax.swing.JButton sinButton;
@@ -888,6 +888,7 @@ public class CalculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton tanButton;
     private javax.swing.JButton tanhButton;
     private javax.swing.JButton threeButton;
+    private javax.swing.JPanel titleLabel;
     private javax.swing.JButton twoButton;
     private javax.swing.JButton zeroButton;
     // End of variables declaration//GEN-END:variables
